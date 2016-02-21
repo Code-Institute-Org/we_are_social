@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>We Are Social</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/cerulean/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+<div class="container">
+    <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="#">Contact</a></li>
+       </ul>
+       <h1><span class="fui-settings-16 muted">We Are Social</span></h1>
+   </div>
+
+   <hr>
+
+   <div class="container">
+       {% block content %}
+       {% endblock %}
+   </div>
+
+   <hr>
+
+   <div class="footer">
+       <p>Made By Bootcampers and Django </p>
+   </div>
+</div>
+</body>
+
+<!-- script references -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js">
+</script>
+</html>
