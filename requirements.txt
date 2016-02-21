@@ -1,0 +1,11 @@
+arrow==0.7.0
+beautifulsoup4==4.4.1
+disqus==0.0.4
+Django==1.8.9
+django-emoticons==1.1.2
+django-forms-bootstrap==3.0.1
+django-tinymce==2.2.0
+Pillow==3.1.1
+python-dateutil==2.4.2
+six==1.10.0
+wheel==0.24.0

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'home',
+    'accounts'
 ]
 
 MIDDLEWARE_CLASSES = [
