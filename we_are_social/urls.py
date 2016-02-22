@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from home import views
-from accounts.views import register, profile
+from accounts.views import register, profile, login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^pages/', include('django.contrib.flatpages.urls')),
     url(r'^register/$', register, name='register'),
     url(r'^profile/$', profile, name='profile'),
+    url(r'^login/$', login, name='login'),
 ]
