@@ -43,7 +43,7 @@ def login(request):
         form = UserLoginForm(request.POST)
         if form.is_valid():
             user = auth.authenticate(email=request.POST.get('email'),
-                                    password=request.POST.get('password'))
+                                     password=request.POST.get('password'))
 
             if user is not None:
                 auth.login(request, user)
@@ -55,6 +55,12 @@ def login(request):
     else:
         form = UserLoginForm()
 
-    args = {'form':form}
+    args = {'form': form}
     args.update(csrf(request))
     return render(request, 'login.html', args)
+
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request, 'You have successfully logged out')
+    return render(request, 'index.html')
