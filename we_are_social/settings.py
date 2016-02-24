@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_forms_bootstrap',
     'home',
-    'accounts'
+    'accounts',
+    'paypal_store',
+    'products',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
