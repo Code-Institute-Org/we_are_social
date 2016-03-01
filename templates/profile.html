@@ -4,7 +4,7 @@
     <p>You are logged in as {{ user.email }} </p>
     <p>Your stripe id is {{ user.stripe_id }} </p>
     <h2>Subscription Details</h2>
-    <p>You have {{ subscription_days }} days left on your subscription</p>
+    <p>You have {{ user.subscription_end|timeuntil}} left on your subscription</p>
     <p>To cancel your subscription click 'Cancel Subscription' below</p>
     <p>
         <a href="{% url "cancel_subscription" %}"
@@ -20,4 +20,5 @@
             return false;
         }
     </script>
+
 {% endblock %}
