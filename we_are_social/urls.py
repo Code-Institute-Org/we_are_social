@@ -16,15 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from home import views
-<<<<<<< HEAD
-from accounts.views import register, profile, login, logout
 from paypal.standard.ipn import urls as paypal_urls
 from paypal_store import views as paypal_views
 from products import views as product_views
 from magazines import views as magazine_views
-=======
 from accounts.views import register, profile, login, logout, cancel_subscription, subscriptions_webhook
->>>>>>> b0dce4e2f8ed21c3127116935358dfb14276f62d
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
