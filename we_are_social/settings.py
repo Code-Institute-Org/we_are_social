@@ -44,11 +44,14 @@ INSTALLED_APPS = [
     'accounts',
     'paypal_store',
     'products',
+    'paypal.standard.ipn',
+    'magazines',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'accounts.backends.EmailAuth',)
+LOGIN_URL = '/login/'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,5 +138,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SITE_URL = 'http://127.0.0.1:8000'
-PAYPAL_NOTIFY_URL = 'http://127.0.0.1/a-very-hard-to-guess-url/'
+PAYPAL_NOTIFY_URL = 'https://14e67cef.ngrok.io/a-very-hard-to-guess-url/'
 PAYPAL_RECEIVER_EMAIL = 'aaron@codeinstitute.net'
