@@ -7,6 +7,7 @@ def subscription_created(sender, **kwargs):
 
     magazine_id = ipn_obj.custom.split('-')[0]
     user_id = ipn_obj.custom.split('-')[1]
+
     models.Purchase.objects.create(magazine_id=magazine_id,
                                    user_id=user_id,
                                    subscription_end=arrow.now().replace(weeks=+4).datetime)
