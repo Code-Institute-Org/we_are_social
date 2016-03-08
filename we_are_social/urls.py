@@ -43,4 +43,7 @@ urlpatterns = [
     url(r'^paypal-cancel/$', paypal_views.paypal_cancel),
     url(r'^products/$', product_views.all_products),
     url(r'^magazines/$', magazine_views.all_magazines),
+
+    # Blog URLs
+    url(r'^blog/', include('reusable_blog.urls')),
 ]
