@@ -21,6 +21,7 @@ from paypal_store import views as paypal_views
 from products import views as product_views
 from magazines import views as magazine_views
 from accounts.views import register, profile, login, logout, cancel_subscription, subscriptions_webhook
+from threads import views as forum_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,4 +47,14 @@ urlpatterns = [
 
     # Blog URLs
     url(r'^blog/', include('reusable_blog.urls')),
+
+    # Forum URLs
+    url(r'^forum/$', forum_views.forum),
+    url(r'^threads/(?P<subject_id>\d+)/$', forum_views.threads, name='threads'),
+    url(r'^new_thread/(?P<subject_id>\d+)/$', forum_views.new_thread, name='new_thread'),
+    url(r'^thread/(?P<thread_id>\d+)/$', forum_views.thread, name='thread'),
+    url(r'^post/new/(?P<thread_id>\d+)/$', forum_views.new_post, name='new_post'),
+    url(r'^post/edit/(?P<thread_id>\d+)/$', forum_views.edit_post, name='edit_post'),
+    url(r'^post/delete/(?P<thread_id>\d+)/(?P<post_id>\d+)/$',
+                        forum_views.delete_post, name='delete_post')
 ]

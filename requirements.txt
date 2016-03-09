@@ -12,3 +12,4 @@ wheel==0.24.0
 django-paypal==0.2.7
 stripe
 git+https://github.com/aaronsnig501/reusable-blog-app.git
+django-debug-toolbar
