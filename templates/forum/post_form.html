@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% load staticfiles %}
+{% block head_js %}
+    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+    <script>
+    tinyMCE.init({
+        mode: "textareas",
+        theme: "modern",
+        plugins: "paste"
+    });
+    </script>
+{% endblock %}
+{% block content %}
+    <section>
+        <div class="col-md-9">
+            <form method="post" action="{{ form_action }}">
+                {% csrf_token %}
+                {{ form|as_bootstrap }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
