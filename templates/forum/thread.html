@@ -25,6 +25,33 @@
                     </tbody>
                 </table>
             </div>
+
+            {% if thread.poll %}
+                <div class="container">
+                    <div class="col-md-6">
+                        <h2>Poll</h2>
+                        <strong>{{ thread.poll.question }}</strong>
+
+                        <p>Here's how the votes are so far</p>
+
+                        {% for subject in thread.poll.subjects.all %}
+                            <div class="col-md-10">
+                                <strong>{{ subject.name }}</strong>
+                                <span class="pull-right">{{ subject|vote_percentage }}%</span>
+                            </div>
+                            {% user_vote_button thread subject user %}
+
+                            <div class="col-md-10">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-value="{{ subject|vote_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ subject|vote_percentage }}%;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
             {% if user.is_authenticated %}
                 <p>
                     <a href="{% url 'new_post' thread.id %}" class="btn btn-primary">New post</a>
