@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'paypal.standard.ipn',
     'debug_toolbar',
+    'rest_framework',
     'tinymce',
     'emoticons',
     'disqus',
