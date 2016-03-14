@@ -1,0 +1,29 @@
+<div class="container" ng-app="pollApp">
+    <div class="col-md-6">
+        <div class="panel panel-default" ng-controller="PollCtrl">
+            <div class="panel-heading">
+                <strong>Poll - {$ poll.question $} (Total of {$ poll.total_votes $} votes so far)</strong>
+            </div>
+            <div class="panel-body">
+                <p>Here's how the votes are so far:</p>
+                <div ng-repeat="subject in poll.subjects">
+                    <div class="col-md-9">
+                        <strong>{$ subject.name $}</strong>
+                        <span class="pull-right">{$ subject.percentage_of_votes $}%</span>
+                    </div>
+                    <span ng-if="poll.user_has_voted == false" ng-click="vote(poll, subject)" class="glyphicon glyphicon-ok col-md-3 btn-vote"></span>
+                    <div class="col-md-9">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar"
+                                 aria-value="{$ subject.percentage_of_votes $}"
+                                 aria-valuemin="0" aria-valuemax="100"
+                                 style="width:{$ subject.percentage_of_votes $}%;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
