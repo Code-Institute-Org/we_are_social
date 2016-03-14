@@ -12,24 +12,26 @@ class VoteSerializer(serializers.ModelSerializer):
 class PollSubjectSerializer(serializers.ModelSerializer):
 
     votes = VoteSerializer(many=True)
-    total_votes = serializers.SerializerMethodField()
+    percentage_of_votes = serializers.SerializerMethodField()
 
     class Meta:
         model = PollSubject
-        fields = ('id', 'name', 'votes', 'total_votes')
+        fields = ('id', 'name', 'votes', 'percentage_of_votes')
 
-    def get_total_votes(self, subject):
-        return subject.votes.count()
+    def get_percentage_of_votes(self, subject):
+        return subject.votes.count() / subject.poll.votes.count() * 100
 
 
 class PollSerializer(serializers.ModelSerializer):
 
     subjects = PollSubjectSerializer(many=True)
     user_has_voted = serializers.SerializerMethodField()
+    total_votes = serializers.SerializerMethodField()
 
     class Meta:
         model = Poll
-        fields = ('id', 'question', 'subjects', 'user_has_voted')
+        fields = ('id', 'question', 'subjects',
+                  'user_has_voted', 'total_votes')
 
     def get_user_has_voted(self, poll):
         has_voted = False
@@ -38,9 +40,15 @@ class PollSerializer(serializers.ModelSerializer):
         if request:
             return False
 
+        if not request.user.is_authenticated():
+            return True
+
         vote = poll.votes.filter(user_id=request.user.id).first()
 
         if vote:
             has_voted = True
 
         return has_voted
+
+    def get_total_votes(self, poll):
+        return poll.votes.count()
