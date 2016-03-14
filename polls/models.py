@@ -8,11 +8,17 @@ class Poll(models.Model):
     question = models.TextField()
     thread = models.OneToOneField(Thread, null=True)
 
+    def __unicode__(self):
+        return self.question
+
 
 class PollSubject(models.Model):
 
     name = models.CharField(max_length=255)
     poll = models.ForeignKey(Poll, related_name='subjects')
+
+    def __unicode__(self):
+        return self.name
 
 
 class Vote(models.Model):
