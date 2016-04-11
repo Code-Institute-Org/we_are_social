@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'paypal.standard.ipn',
     'rest_framework',
-    'django_migration_fixture',
     'tinymce',
     'emoticons',
     'disqus',
