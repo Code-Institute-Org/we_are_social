@@ -16,28 +16,28 @@ import json
 
 stripe.api_key = settings.STRIPE_SECRET
 
+
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             try:
                 customer = stripe.Customer.create(
-                        email=form.cleaned_data['email'],
-                        card=form.cleaned_data['stripe_id'],  # this is currently the card token/id
-                        plan='REG_MONTHLY',
+
+                    email=form.cleaned_data['email'],
+                    card=form.cleaned_data['stripe_id'],
+                    plan='REG_MONTHLY',
                 )
+            except stripe.error.CardError, e:
+                messages.error(request, "Your card was declined!")
 
-                if customer:
-                    user = form.save()  # save here to create the user and get its instance
+            if customer:
+                user = form.save()
+                user.stripe_id = customer.id
+                user.subscription_end = arrow.now().replace(weeks=+4).datetime
+                user.save()
 
-                    # now we replace the card id with the actual user id for later
-                    user.stripe_id = customer.id
-                    user.subscription_end = arrow.now().replace(weeks=+4).datetime  # add 4 weeks from now
-                    user.save()
-
-                # check we saved correctly and can login
-                user = auth.authenticate(email=request.POST.get('email'),
-                                         password=request.POST.get('password1'))
+                user = auth.authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
 
                 if user:
                     auth.login(request, user)
@@ -45,18 +45,15 @@ def register(request):
                     return redirect(reverse('profile'))
 
                 else:
-                    messages.error(request, "unable to log you in at this time!")
-
-            except stripe.error.CardError, e:
-                form.add_error(request, "Your card was declined!")
-
+                    messages.error(request, "We were unable to log you in at this time")
+            else:
+                messages.error(request, "We were unable to take payment from the card provided")
     else:
         today = datetime.date.today()
-        form = UserRegistrationForm()
+        form = UserRegistrationForm(initial={'expiry_month': today.month, 'expiry_year': today.year})
 
     args = {'form': form, 'publishable': settings.STRIPE_PUBLISHABLE}
     args.update(csrf(request))
-
     return render(request, 'register.html', args)
 
 
