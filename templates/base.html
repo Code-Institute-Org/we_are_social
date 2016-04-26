@@ -19,7 +19,7 @@
         <ul class="nav nav-pills pull-right">
             <li><a href="/">Home</a></li>
             <li><a href="/pages/about/">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'profile' %}">Profile</a></li>
                 <li><a href="{% url 'logout' %}">Log Out</a></li>

@@ -28,6 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 SITE_ID = 2
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'brian@codeinstitute.net'
+EMAIL_HOST_PASSWORD = 'Shine000006'
+EMAIL_PORT = 587
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_forms_bootstrap',
     'home',
-    'accounts'
+    'accounts',
+    'contact',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

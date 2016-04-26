@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from home import views
+import contact.views
+import home.views
 from accounts.views import register, profile, login, logout, cancel_subscription, subscriptions_webhook
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.get_index),
+    url(r'^$',home.views.get_index, name='home'),
+    url(r'^contact/',contact.views.contact, name='contact'),
     url(r'^pages/', include('django.contrib.flatpages.urls')),
     url(r'^register/$', register, name='register'),
     url(r'^profile/$', profile, name='profile'),
