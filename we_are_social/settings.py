@@ -31,7 +31,7 @@ SITE_ID = 2
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'brian@codeinstitute.net'
-EMAIL_HOST_PASSWORD = 'Shine000006'
+EMAIL_HOST_PASSWORD = 'abc123'
 EMAIL_PORT = 587
 
 # Application definition
