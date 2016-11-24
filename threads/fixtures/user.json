@@ -1,0 +1,42 @@
+[
+{
+    "fields": {
+        "username": "aaron@codeinstitute.net",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2016-11-24T16:37:12.386Z",
+        "subscription_end": "2016-11-24T16:34:38.720Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$CdxymODACa1S$uWsmuoxSyZxFHfhiwRmaDPsY028o5knn2+/Yw9RORAE=",
+        "stripe_id": "",
+        "email": "aaron@codeinstitute.net",
+        "date_joined": "2016-11-24T16:34:38.720Z"
+    },
+    "model": "accounts.user",
+    "pk": 1
+},
+{
+    "fields": {
+        "username": "yoni@codeinstitute.net",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": null,
+        "subscription_end": "2016-11-24T16:36:34.475Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$T9B6dBUPjA6F$TyrDmS3ix0B47/keYh6IzJS6E4KwDqAfKAmqipf7pCc=",
+        "stripe_id": "",
+        "email": "yoni@codeinstitute.net",
+        "date_joined": "2016-11-24T16:36:34.474Z"
+    },
+    "model": "accounts.user",
+    "pk": 2
+}
+]

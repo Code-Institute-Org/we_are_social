@@ -1,12 +1,11 @@
 from django.test import TestCase
 from django.shortcuts import render_to_response
 from .models import Subject
-import difflib
 
 
 class SubjectPageTest(TestCase):
 
-    fixtures = ['subjects']
+    fixtures = ['subjects', 'user']
 
     def test_check_content_is_correct(self):
         subject_page = self.client.get('/forum/')
