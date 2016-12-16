@@ -25,6 +25,11 @@ from threads import views as forum_views
 from polls import api_views
 from threads import api_views as thread_api_views
 
+if settings.DEBUG: import debug_toolbar
+urlpatterns += [
+url(r'^debug/', include(debug_toolbar.urls)),
+]
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.get_index),
@@ -42,8 +47,8 @@ urlpatterns = [
 
     # Paypal URLs
     url(r'^a-very-hard-to-guess-url/', include(paypal_urls)),
-    url(r'^paypal-return/$', paypal_views.paypal_return),
-    url(r'^paypal-cancel/$', paypal_views.paypal_cancel),
+    url(r'^paypal-return', paypal_views.paypal_return),
+    url(r'^paypal-cancel', paypal_views.paypal_cancel),
     url(r'^products/$', product_views.all_products),
     url(r'^magazines/$', magazine_views.all_magazines),
 
