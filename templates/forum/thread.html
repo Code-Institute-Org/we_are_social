@@ -25,11 +25,11 @@
                     </tbody>
                 </table>
             </div>
-
             {% if thread.poll %}
                 {% csrf_token %}
                 {% include 'forum/poll.html' %}
             {% endif %}
+
             {% if user.is_authenticated %}
                 <p>
                     <a href="{% url 'new_post' thread.id %}" class="btn btn-primary">New post</a>
@@ -37,4 +37,5 @@
             {% endif %}
         </div>
     </div>
+
 {% endblock %}

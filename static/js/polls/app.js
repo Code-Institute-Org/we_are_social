@@ -22,7 +22,7 @@ pollApp.factory('pollFactory', function($http) {
     pollFactory.vote = function(poll, subject) {
         var data = {'poll': poll.id, 'subject': subject.id};
 
-        return $http.post(votingUrl + poll.thread + '/', data);
+        return $http.post(votingUrl + poll.id + '/', data);
     };
 
     return pollFactory;

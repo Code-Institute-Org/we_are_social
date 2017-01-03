@@ -44,6 +44,8 @@ class UserRegistrationForm(UserCreationForm):
             message = "Please enter your email address"
             raise forms.ValidationError(message)
 
+        return email
+
     def save(self, commit=True):
         instance = super(UserRegistrationForm, self).save(commit=False)
 

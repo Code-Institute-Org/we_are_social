@@ -1,1 +1,1 @@
--r requirements/staging.txt
+-r requirements/dev.txt
