@@ -26,10 +26,6 @@ from threads import views as forum_views
 from polls import api_views
 from threads import api_views as thread_api_views
 
-if settings.DEBUG: import debug_toolbar
-urlpatterns += [
-url(r'^debug/', include(debug_toolbar.urls)),
-]
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -79,3 +75,9 @@ urlpatterns = [
     url(r'post/delete/(?P<pk>[\d]+)/$', thread_api_views.PostDeleteView.as_view(),
         name='delete-poll')
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+    url(r'^debug/', include(debug_toolbar.urls)),
+    ]
