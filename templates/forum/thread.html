@@ -8,20 +8,20 @@
             <div class="col-md-12">
                 <table class="table">
                     <tbody>
-                    <tr>
-                        <th>CREATED</th>
-                        <th>OWNER</th>
-                        <th>LAST POST</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <time datetime="{{ thread.created_at }}">
-                                {{ thread.created_at | started_time }}
-                            </time>
-                        </td>
-                        <td>{{ thread.user.username }}</td>
-                        <td>{% last_posted_user_name thread %}</td>
-                    </tr>
+                        <tr>
+                            <th>CREATED</th>
+                            <th>OWNER</th>
+                            <th>LAST POST</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <time datetime="{{ thread.created_at }}">
+                                    {{ thread.created_at | started_time }}
+                                </time>
+                            </td>
+                            <td>{{ thread.user.username }}</td>
+                            <td>{% last_posted_user_name thread %}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
