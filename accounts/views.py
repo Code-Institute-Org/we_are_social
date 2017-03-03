@@ -23,31 +23,31 @@ def register(request):
         if form.is_valid():
             try:
                 customer = stripe.Customer.create(
-
                     email=form.cleaned_data['email'],
                     card=form.cleaned_data['stripe_id'],
                     plan='REG_MONTHLY',
                 )
+
+                if customer:
+                    user = form.save()
+                    user.stripe_id = customer.id
+                    user.subscription_end = arrow.now().replace(weeks=+4).datetime
+                    user.save()
+
+                    user = auth.authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
+
+                    if user:
+                        auth.login(request, user)
+                        messages.success(request, "You have successfully registered")
+                        return redirect(reverse('profile'))
+
+                    else:
+                        messages.error(request, "We were unable to log you in at this time")
+                else:
+                    messages.error(request, "We were unable to take payment from the card provided")
+
             except stripe.error.CardError, e:
                 messages.error(request, "Your card was declined!")
-
-            if customer:
-                user = form.save()
-                user.stripe_id = customer.id
-                user.subscription_end = arrow.now().replace(weeks=+4).datetime
-                user.save()
-
-                user = auth.authenticate(email=request.POST.get('email'), password=request.POST.get('password1'))
-
-                if user:
-                    auth.login(request, user)
-                    messages.success(request, "You have successfully registered")
-                    return redirect(reverse('profile'))
-
-                else:
-                    messages.error(request, "We were unable to log you in at this time")
-            else:
-                messages.error(request, "We were unable to take payment from the card provided")
     else:
         today = datetime.date.today()
         form = UserRegistrationForm(initial={'expiry_month': today.month, 'expiry_year': today.year})
