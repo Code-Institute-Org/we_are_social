@@ -40,7 +40,4 @@ class User(AbstractUser):
         except Exception:
             return False
 
-        if purchase.subscription_end > timezone.now():
-            return False
-
-        return True
+        return purchase.subscription_end > timezone.now()
