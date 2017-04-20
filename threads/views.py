@@ -121,9 +121,9 @@ def edit_post(request, thread_id, post_id):
         if form.is_valid():
             form.save()
             messages.success(request,
-                            "You have updated your thread!")
+                             "You have updated your thread!")
 
-            return redirect(reverse('thread', args={thread.id}))
+            return redirect(reverse('thread', args={thread_id}))
     else:
         form = PostForm(instance=post)
 
@@ -140,9 +140,8 @@ def edit_post(request, thread_id, post_id):
 
 
 @login_required
-def delete_post(request, post_id):
+def delete_post(request, thread_id, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    thread_id = post.thread.id
     post.delete()
 
     messages.success(request, "Your post was deleted!")

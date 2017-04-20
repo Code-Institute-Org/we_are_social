@@ -21,7 +21,8 @@ from paypal.standard.ipn import urls as paypal_urls
 from paypal_store import views as paypal_views
 from products import views as product_views
 from magazines import views as magazine_views
-from accounts.views import register, profile, login, logout, cancel_subscription, subscriptions_webhook
+from accounts.views import register, profile, login, logout, \
+    cancel_subscription, subscriptions_webhook
 from threads import views as forum_views
 from polls import api_views
 from threads import api_views as thread_api_views
@@ -39,8 +40,10 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
 
     # Stripe URLS
-    url(r'^cancel_subscription/$', cancel_subscription, name='cancel_subscription'),
-    url(r'^subscriptions_webhook/$', subscriptions_webhook, name='subscriptions_webhook'),
+    url(r'^cancel_subscription/$', cancel_subscription,
+        name='cancel_subscription'),
+    url(r'^subscriptions_webhook/$', subscriptions_webhook,
+        name='subscriptions_webhook'),
 
     # Paypal URLs
     url(r'^a-very-hard-to-guess-url/', include(paypal_urls)),
@@ -54,11 +57,15 @@ urlpatterns = [
 
     # Forum URLs
     url(r'^forum/$', forum_views.forum),
-    url(r'^threads/(?P<subject_id>\d+)/$', forum_views.threads, name='threads'),
-    url(r'^new_thread/(?P<subject_id>\d+)/$', forum_views.new_thread, name='new_thread'),
+    url(r'^threads/(?P<subject_id>\d+)/$',
+        forum_views.threads, name='threads'),
+    url(r'^new_thread/(?P<subject_id>\d+)/$',
+        forum_views.new_thread, name='new_thread'),
     url(r'^thread/(?P<thread_id>\d+)/$', forum_views.thread, name='thread'),
-    url(r'^post/new/(?P<thread_id>\d+)/$', forum_views.new_post, name='new_post'),
-    url(r'^post/edit/(?P<thread_id>\d+)/$', forum_views.edit_post, name='edit_post'),
+    url(r'^post/new/(?P<thread_id>\d+)/$',
+        forum_views.new_post, name='new_post'),
+    url(r'^post/edit/(?P<thread_id>\d+)/(?P<post_id>\d+)/$',
+        forum_views.edit_post, name='edit_post'),
     url(r'^post/delete/(?P<thread_id>\d+)/(?P<post_id>\d+)/$',
         forum_views.delete_post, name='delete_post'),
     url(r'^thread/vote/(?P<thread_id>\d+)/(?P<subject_id>\d+)/$',
@@ -68,16 +75,14 @@ urlpatterns = [
     url(r'^threads/polls/$', api_views.PollViewSet.as_view()),
     url(r'^threads/polls/(?P<pk>[\d]+)$', api_views.PollInstanceView.as_view(),
         name='poll-instance'),
-    url(r'^threads/polls/vote/(?P<thread_id>\d+)/$', api_views.VoteCreateView.as_view(),
-        name='create_vote'),
-    url(r'^post/update/(?P<pk>[\d+]+)/$', thread_api_views.PostUpdateView.as_view(),
-        name="update-poll"),
-    url(r'post/delete/(?P<pk>[\d]+)/$', thread_api_views.PostDeleteView.as_view(),
-        name='delete-poll')
+    url(r'^threads/polls/vote/(?P<thread_id>\d+)/$',
+        api_views.VoteCreateView.as_view(), name='create_vote'),
+    url(r'^post/update/(?P<pk>[\d+]+)/$',
+        thread_api_views.PostUpdateView.as_view(), name="update-poll"),
+    url(r'post/delete/(?P<pk>[\d]+)/$',
+        thread_api_views.PostDeleteView.as_view(), name='delete-poll')
 ]
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += [
-    url(r'^debug/', include(debug_toolbar.urls)),
-    ]
+    urlpatterns.append(url(r'^debug/', include(debug_toolbar.urls)))
