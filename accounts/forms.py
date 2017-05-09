@@ -25,7 +25,7 @@ class UserRegistrationForm(UserCreationForm):
 
         if password1 and password2 and password1 != password2:
             message = "Passwords do not match"
-            raise ValidationError(message)
+            raise forms.ValidationError(message)
 
         return password2
 
