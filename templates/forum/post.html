@@ -9,7 +9,7 @@
     <div class="col-md-9">
         <div class="comment-content">
             {% autoescape off %}
-                {% post.comment|emoticons %}
+                {{ post.comment|emoticons }}
             {% endautoescape %}
         </div>
         {% include "forum/comment_details.html" %}
