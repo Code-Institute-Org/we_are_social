@@ -38,7 +38,10 @@
                                 <strong>{{ subject.name }}</strong>
                                 <span class="pull-right">{{ subject|vote_percentage }}%</span>
                             </div>
+
+                            {% autoescape off %}
                             {% user_vote_button thread subject user %}
+                            {% endautoescape %}
 
                             <div class="col-md-10">
                                 <div class="progress">
