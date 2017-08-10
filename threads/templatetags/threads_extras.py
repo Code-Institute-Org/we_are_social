@@ -1,6 +1,7 @@
 import arrow
 from django import template
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -40,8 +41,7 @@ def user_vote_button(thread, subject, user):
                 'thread_id': thread.id,
                 'subject_id': subject.id
             })
-
-            return link
+            return mark_safe(link)
     return ""
 
 
