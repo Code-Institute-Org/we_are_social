@@ -23,15 +23,16 @@ def threads(request, subject_id):
 @login_required
 def new_thread(request, subject_id):
     subject = get_object_or_404(Subject, pk=subject_id)
-    poll_subject_formset = formset_factory(PollSubjectForm, extra=3)
+    poll_subject_formset_class = formset_factory(PollSubjectForm, extra=3)
     if request.method == "POST":
         thread_form = ThreadForm(request.POST)
         post_form = PostForm(request.POST)
         poll_form = PollForm(request.POST)
-        poll_subject_formset = poll_subject_formset(request.POST)
-        if thread_form.is_valid() and post_form.is_valid()\
-                and poll_form.is_valid() \
-                and poll_subject_formset.is_valid():
+        poll_subject_formset = poll_subject_formset_class(request.POST)
+        if (thread_form.is_valid() and
+                post_form.is_valid() and
+                poll_form.is_valid() and
+                poll_subject_formset.is_valid()):
             thread = thread_form.save(False)
             thread.subject = subject
             thread.user = request.user
@@ -58,7 +59,7 @@ def new_thread(request, subject_id):
         thread_form = ThreadForm()
         post_form = PostForm(request.POST)
         poll_form = PollForm()
-        poll_subject_formset = poll_subject_formset()
+        poll_subject_formset = poll_subject_formset_class()
 
     args = {
         'thread_form': thread_form,
