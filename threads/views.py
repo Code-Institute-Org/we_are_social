@@ -57,7 +57,7 @@ def new_thread(request, subject_id):
             return redirect(reverse('thread', args={thread.pk}))
     else:
         thread_form = ThreadForm()
-        post_form = PostForm(request.POST)
+        post_form = PostForm()
         poll_form = PollForm()
         poll_subject_formset = poll_subject_formset_class()
 
