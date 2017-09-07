@@ -21,8 +21,8 @@ def started_time(created_at):
 
 @register.simple_tag
 def last_posted_user_name(thread):
-    posts = thread.posts.all().order_by('-created_at')
-    return posts[posts.count()-1].user.username
+    last_post = thread.posts.all().order_by('created_at').last()
+    return last_post.user.username
 
 
 @register.simple_tag
