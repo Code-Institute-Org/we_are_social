@@ -1,4 +1,5 @@
 from base import *
+import os
 import dj_database_url
 import settings
 
@@ -19,3 +20,20 @@ PAYPAL_RECEIVER_EMAIL = 'aaron@codeinstitute.net'
 
 SITE_URL = 'https://your-heroku-app.herokuapp.com'
 ALLOWED_HOSTS.append('your-heroku-app.herokuapp.com')
+
+# Log DEBUG information to the console
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
