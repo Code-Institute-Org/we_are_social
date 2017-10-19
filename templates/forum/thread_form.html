@@ -36,8 +36,10 @@
         function showOrHidePollForm() {
             if ($('#id_is_a_poll').is(':checked')) {
                 $('#poll_form').show();
+                $('#id_question').prop("disabled", false);
             } else {
                 $('#poll_form').hide();
+                $('#id_question').prop("disabled", true);
             }
         }
 

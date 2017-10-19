@@ -20,41 +20,58 @@ def threads(request, subject_id):
     return render(request, 'forum/threads.html', {'subject': subject})
 
 
+def save_thread(thread_form, post_form, subject, user):
+    thread = thread_form.save(commit=False)
+    thread.subject = subject
+    thread.user = user
+    thread.save()
+
+    post = post_form.save(commit=False)
+    post.user = user
+    post.thread = thread
+    post.save()
+    return thread
+
+
+def save_poll(poll_form, poll_subject_formset, thread):
+    poll = poll_form.save(commit=False)
+    poll.thread = thread
+    poll.save()
+
+    for subject_form in poll_subject_formset:
+        subject = subject_form.save(commit=False)
+        subject.poll = poll
+        subject.save()
+
+
 @login_required
 def new_thread(request, subject_id):
     subject = get_object_or_404(Subject, pk=subject_id)
     poll_subject_formset_class = formset_factory(PollSubjectForm, extra=3)
+
     if request.method == "POST":
         thread_form = ThreadForm(request.POST)
         post_form = PostForm(request.POST)
         poll_form = PollForm(request.POST)
         poll_subject_formset = poll_subject_formset_class(request.POST)
-        if (thread_form.is_valid() and
-                post_form.is_valid() and
-                poll_form.is_valid() and
-                poll_subject_formset.is_valid()):
-            thread = thread_form.save(False)
-            thread.subject = subject
-            thread.user = request.user
-            thread.save()
 
-            post = post_form.save(False)
-            post.user = request.user
-            post.thread = thread
-            post.save()
+        is_a_poll = request.POST.get('is_a_poll')
+        thread_valid = thread_form.is_valid() and post_form.is_valid()
+        poll_valid = poll_form.is_valid() and poll_subject_formset.is_valid()
 
-            poll = poll_form.save(False)
-            poll.thread = thread
-            poll.save()
-
-            for subject_form in poll_subject_formset:
-                subject = subject_form.save(False)
-                subject.poll = poll
-                subject.save()
-
+        if (thread_valid and not is_a_poll):
+            thread = save_thread(thread_form, post_form, subject, request.user)
             messages.success(request, "You have created a new thread!")
-
             return redirect(reverse('thread', args=[thread.pk]))
+
+
+        if (thread_valid and is_a_poll and poll_valid):
+            thread = save_thread(thread_form, post_form, subject, request.user)
+            save_poll(poll_form, poll_subject_formset, thread)
+            messages.success(
+                request, "You have created a new thread with a poll!")
+            return redirect(reverse('thread', args=[thread.pk]))
+
     else:
         thread_form = ThreadForm()
         post_form = PostForm()
