@@ -27,7 +27,6 @@ from threads import views as forum_views
 from polls import api_views
 from threads import api_views as thread_api_views
 
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.get_index),
