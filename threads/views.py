@@ -23,15 +23,16 @@ def threads(request, subject_id):
 @login_required
 def new_thread(request, subject_id):
     subject = get_object_or_404(Subject, pk=subject_id)
-    poll_subject_formset = formset_factory(PollSubjectForm, extra=3)
+    poll_subject_formset_class = formset_factory(PollSubjectForm, extra=3)
     if request.method == "POST":
         thread_form = ThreadForm(request.POST)
         post_form = PostForm(request.POST)
         poll_form = PollForm(request.POST)
-        poll_subject_formset = poll_subject_formset(request.POST)
-        if thread_form.is_valid() and post_form.is_valid()\
-                and poll_form.is_valid() \
-                and poll_subject_formset.is_valid():
+        poll_subject_formset = poll_subject_formset_class(request.POST)
+        if (thread_form.is_valid() and
+                post_form.is_valid() and
+                poll_form.is_valid() and
+                poll_subject_formset.is_valid()):
             thread = thread_form.save(False)
             thread.subject = subject
             thread.user = request.user
@@ -53,12 +54,12 @@ def new_thread(request, subject_id):
 
             messages.success(request, "You have created a new thread!")
 
-            return redirect(reverse('thread', args={thread.pk}))
+            return redirect(reverse('thread', args=[thread.pk]))
     else:
         thread_form = ThreadForm()
-        post_form = PostForm(request.POST)
+        post_form = PostForm()
         poll_form = PollForm()
-        poll_subject_formset = poll_subject_formset()
+        poll_subject_formset = poll_subject_formset_class()
 
     args = {
         'thread_form': thread_form,
@@ -121,9 +122,9 @@ def edit_post(request, thread_id, post_id):
         if form.is_valid():
             form.save()
             messages.success(request,
-                            "You have updated your thread!")
+                             "You have updated your thread!")
 
-            return redirect(reverse('thread', args={thread.id}))
+            return redirect(reverse('thread', args={thread_id}))
     else:
         form = PostForm(instance=post)
 
@@ -140,9 +141,8 @@ def edit_post(request, thread_id, post_id):
 
 
 @login_required
-def delete_post(request, post_id):
+def delete_post(request, thread_id, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    thread_id = post.thread.id
     post.delete()
 
     messages.success(request, "Your post was deleted!")
