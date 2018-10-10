@@ -2,7 +2,7 @@ appdirs==1.4.3
 arrow==0.10.0
 beautifulsoup4==4.6.0
 disqus==0.0.4
-Django==1.11
+Django==1.11.16
 django-disqus==0.5
 django-emoticons==1.2
 django-forms-bootstrap==3.1.0
